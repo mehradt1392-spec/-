@@ -1,22 +1,13 @@
 // ==========================================
-// RENGO — LOCAL STORY ENGINE v3
-// No API • No Backend • No API Key
+// RENGO — STORY INTELLIGENCE ENGINE v4
+// Local • No API • No Backend
 // ==========================================
 
 (() => {
 
     "use strict";
 
-    // ------------------------------------------
-    // STATE
-    // ------------------------------------------
-
     let selectedLevel = null;
-
-
-    // ------------------------------------------
-    // DOM
-    // ------------------------------------------
 
     const levelButtons = document.querySelectorAll(".level");
     const genreSelect = document.getElementById("genre");
@@ -27,345 +18,76 @@
     const storyText = document.getElementById("storyText");
 
 
-    // ------------------------------------------
-    // DATA
-    // ------------------------------------------
+    // ==========================================
+    // NAMES
+    // ==========================================
 
     const names = [
-        "Mia",
-        "Leo",
-        "Noah",
-        "Emma",
-        "Liam",
-        "Zara",
-        "Ethan",
-        "Ivy",
-        "Owen",
-        "Lina"
+        "Leo", "Mia", "Noah", "Emma",
+        "Liam", "Zara", "Ethan", "Ivy",
+        "Oliver", "Lina", "Daniel", "Sophia"
     ];
 
 
-    const genreData = {
+    // ==========================================
+    // LEVEL SYSTEM
+    // ==========================================
 
-        Fantasy: {
-            places: [
-                "an ancient kingdom",
-                "a forgotten castle",
-                "a magical forest",
-                "a village beside a silver lake"
-            ],
-
-            objects: [
-                "an old golden key",
-                "a mysterious map",
-                "a strange blue stone",
-                "an ancient book"
-            ],
-
-            problems: [
-                "an old secret was waking up",
-                "someone had disappeared",
-                "a dangerous force was growing",
-                "the kingdom was in serious danger"
-            ]
-        },
-
-
-        Mystery: {
-            places: [
-                "a quiet town",
-                "an old house",
-                "a small hotel",
-                "a dark street"
-            ],
-
-            objects: [
-                "a locked box",
-                "an old photograph",
-                "a mysterious letter",
-                "a broken watch"
-            ],
-
-            problems: [
-                "someone had left without a trace",
-                "a strange message had appeared",
-                "an important object had disappeared",
-                "nobody could explain what had happened"
-            ]
-        },
-
-
-        Adventure: {
-            places: [
-                "a remote island",
-                "a huge mountain",
-                "a forgotten valley",
-                "a dangerous jungle"
-            ],
-
-            objects: [
-                "an old compass",
-                "a mysterious map",
-                "a small backpack",
-                "a golden coin"
-            ],
-
-            problems: [
-                "the path ahead was unknown",
-                "a storm was coming",
-                "they had lost their way",
-                "someone needed their help"
-            ]
-        },
-
-
-        Horror: {
-            places: [
-                "an abandoned house",
-                "a silent forest",
-                "an empty village",
-                "an old hotel"
-            ],
-
-            objects: [
-                "an old mirror",
-                "a strange key",
-                "a dusty photograph",
-                "a locked wooden box"
-            ],
-
-            problems: [
-                "something strange was moving in the darkness",
-                "someone was watching from the shadows",
-                "the house seemed to hide a secret",
-                "nobody could explain the strange sounds"
-            ]
-        },
-
-
-        Crime: {
-            places: [
-                "a busy city",
-                "a quiet neighborhood",
-                "an old warehouse",
-                "a small police station"
-            ],
-
-            objects: [
-                "a missing file",
-                "an old photograph",
-                "a strange note",
-                "a broken watch"
-            ],
-
-            problems: [
-                "an important person had disappeared",
-                "a valuable object had been stolen",
-                "the evidence did not make sense",
-                "someone was hiding the truth"
-            ]
-        },
-
-
-        Drama: {
-            places: [
-                "a small town",
-                "a family home",
-                "a busy city",
-                "a quiet seaside village"
-            ],
-
-            objects: [
-                "an old photograph",
-                "a family letter",
-                "a small suitcase",
-                "an old diary"
-            ],
-
-            problems: [
-                "the family had to make a difficult choice",
-                "someone was hiding an important truth",
-                "the past had returned",
-                "their lives were about to change"
-            ]
-        },
-
-
-        Comedy: {
-            places: [
-                "a busy city",
-                "a small apartment",
-                "a strange village",
-                "a crowded school"
-            ],
-
-            objects: [
-                "a broken phone",
-                "a giant sandwich",
-                "a strange hat",
-                "an old bicycle"
-            ],
-
-            problems: [
-                "everything went wrong",
-                "nobody understood what was happening",
-                "a simple plan became a disaster",
-                "someone had made a very funny mistake"
-            ]
-        },
-
-
-        Romance: {
-            places: [
-                "a quiet town",
-                "a small café",
-                "a beautiful seaside village",
-                "a busy city park"
-            ],
-
-            objects: [
-                "an old photograph",
-                "a handwritten letter",
-                "a small gift",
-                "an old book"
-            ],
-
-            problems: [
-                "two people had to understand their feelings",
-                "the past was making things difficult",
-                "someone was afraid to tell the truth",
-                "an important decision had to be made"
-            ]
-        },
-
-
-        "Science Fiction": {
-            places: [
-                "a space station",
-                "a futuristic city",
-                "a research laboratory",
-                "a distant planet"
-            ],
-
-            objects: [
-                "a strange machine",
-                "a small robot",
-                "an unknown device",
-                "a mysterious computer"
-            ],
-
-            problems: [
-                "the machine had stopped working",
-                "the system had detected something unknown",
-                "someone had disappeared",
-                "an unexpected signal had arrived"
-            ]
-        },
-
-
-        Historical: {
-            places: [
-                "a royal palace",
-                "a medieval city",
-                "a small village",
-                "an old European kingdom"
-            ],
-
-            objects: [
-                "an ancient letter",
-                "a royal crown",
-                "an old sword",
-                "a sealed document"
-            ],
-
-            problems: [
-                "the kingdom was facing a difficult time",
-                "someone wanted to take the throne",
-                "an important secret had been discovered",
-                "the future of the kingdom was uncertain"
-            ]
-        },
-
-
-        Custom: {
-            places: [
-                "a quiet town",
-                "a large city",
-                "a small village",
-                "a place nobody knew well"
-            ],
-
-            objects: [
-                "an old object",
-                "a strange letter",
-                "a mysterious box",
-                "a forgotten photograph"
-            ],
-
-            problems: [
-                "something unexpected happened",
-                "someone discovered a strange secret",
-                "everything suddenly changed",
-                "nobody knew what would happen next"
-            ]
-        }
-
-    };
-
-
-    // ------------------------------------------
-    // LEVEL SETTINGS
-    // ------------------------------------------
-
-    const levelData = {
+    const levels = {
 
         A1: {
-            sentence: "short and simple",
             connectors: ["Then", "But", "So", "After that"],
             endings: [
-                "In the end, everything was okay.",
-                "At the end of the day, they were happy.",
-                "From that day on, life was different."
+                "In the end, they were happy.",
+                "At the end, everything was safe.",
+                "From that day on, their lives were different."
             ]
         },
-
 
         A2: {
-            sentence: "simple and clear",
             connectors: ["Then", "However", "After that", "Because of this"],
             endings: [
-                "In the end, they understood what had happened.",
-                "From that day on, they never forgot the experience.",
-                "Finally, everything became clear."
+                "In the end, they understood the truth.",
+                "Finally, everything became clear.",
+                "From that day on, they never forgot what happened."
             ]
         },
-
 
         B1: {
-            sentence: "natural and moderately detailed",
-            connectors: ["Meanwhile", "However", "A few minutes later", "Because of this"],
+            connectors: [
+                "Meanwhile",
+                "However",
+                "A few minutes later",
+                "Because of this"
+            ],
             endings: [
-                "In the end, the experience changed the way they saw the world.",
+                "In the end, the experience changed their lives.",
                 "After that day, nothing felt quite the same.",
-                "Eventually, they understood the real meaning of what had happened."
+                "Eventually, they understood what had really happened."
             ]
         },
 
-
         B2: {
-            sentence: "detailed and varied",
-            connectors: ["Meanwhile", "Nevertheless", "As a result", "A moment later"],
+            connectors: [
+                "Meanwhile",
+                "Nevertheless",
+                "As a result",
+                "A moment later"
+            ],
             endings: [
-                "In the end, the experience left a lasting impression on everyone involved.",
+                "In the end, the experience changed their understanding of the world.",
                 "From that moment forward, they knew that their lives had changed.",
                 "Eventually, the truth became impossible to ignore."
             ]
         },
 
-
         C1: {
-            sentence: "rich, precise and sophisticated",
-            connectors: ["Meanwhile", "Nevertheless", "Consequently", "Without warning"],
+            connectors: [
+                "Meanwhile",
+                "Nevertheless",
+                "Consequently",
+                "Without warning"
+            ],
             endings: [
                 "In the end, the experience revealed something none of them had expected.",
                 "From that moment onward, they understood that the past could never simply be forgotten.",
@@ -373,10 +95,13 @@
             ]
         },
 
-
         C2: {
-            sentence: "highly developed and literary",
-            connectors: ["Meanwhile", "Nevertheless", "Consequently", "Unexpectedly"],
+            connectors: [
+                "Meanwhile",
+                "Nevertheless",
+                "Consequently",
+                "Unexpectedly"
+            ],
             endings: [
                 "In the end, the experience became a turning point that permanently altered their understanding of the world.",
                 "From that moment onward, nothing could return to the way it had been before.",
@@ -387,9 +112,183 @@
     };
 
 
-    // ------------------------------------------
+    // ==========================================
+    // GENRES
+    // ==========================================
+
+    const genres = {
+
+        Fantasy: {
+            places: [
+                "an ancient kingdom",
+                "a forgotten castle",
+                "a village beside a silver lake",
+                "a mysterious royal city"
+            ],
+            objects: [
+                "an ancient crown",
+                "a magical ring",
+                "a forgotten royal letter",
+                "an old golden key"
+            ]
+        },
+
+        Mystery: {
+            places: [
+                "a quiet town",
+                "an old mansion",
+                "a small hotel",
+                "a silent neighborhood"
+            ],
+            objects: [
+                "a mysterious letter",
+                "an old photograph",
+                "a locked box",
+                "a broken watch"
+            ]
+        },
+
+        Adventure: {
+            places: [
+                "a remote island",
+                "a huge mountain",
+                "a forgotten valley",
+                "a dangerous jungle"
+            ],
+            objects: [
+                "an old compass",
+                "a mysterious map",
+                "a golden coin",
+                "an ancient diary"
+            ]
+        },
+
+        Horror: {
+            places: [
+                "an abandoned house",
+                "a silent forest",
+                "an empty village",
+                "an old hotel"
+            ],
+            objects: [
+                "an old mirror",
+                "a strange key",
+                "a dusty photograph",
+                "a locked box"
+            ]
+        },
+
+        Crime: {
+            places: [
+                "a large city",
+                "a quiet neighborhood",
+                "an old warehouse",
+                "a police station"
+            ],
+            objects: [
+                "a missing file",
+                "an old photograph",
+                "a secret note",
+                "a broken watch"
+            ]
+        },
+
+        Drama: {
+            places: [
+                "a small town",
+                "a family home",
+                "a busy city",
+                "a quiet village"
+            ],
+            objects: [
+                "an old photograph",
+                "a family letter",
+                "a small suitcase",
+                "an old diary"
+            ]
+        },
+
+        Comedy: {
+            places: [
+                "a busy city",
+                "a small apartment",
+                "a strange village",
+                "a crowded school"
+            ],
+            objects: [
+                "a broken phone",
+                "a giant sandwich",
+                "a strange hat",
+                "an old bicycle"
+            ]
+        },
+
+        Romance: {
+            places: [
+                "a quiet town",
+                "a small café",
+                "a beautiful village",
+                "a city park"
+            ],
+            objects: [
+                "a handwritten letter",
+                "a small gift",
+                "an old photograph",
+                "an old book"
+            ]
+        },
+
+        "Science Fiction": {
+            places: [
+                "a space station",
+                "a futuristic city",
+                "a research laboratory",
+                "a distant planet"
+            ],
+            objects: [
+                "a strange machine",
+                "a small robot",
+                "an unknown device",
+                "a mysterious computer"
+            ]
+        },
+
+        Historical: {
+            places: [
+                "a royal palace",
+                "a medieval city",
+                "a small village",
+                "an old European kingdom"
+            ],
+            objects: [
+                "a royal crown",
+                "an ancient letter",
+                "an old sword",
+                "a sealed document"
+            ]
+        },
+
+        Custom: {
+            places: [
+                "a quiet town",
+                "a large city",
+                "a small village",
+                "a distant place"
+            ],
+            objects: [
+                "an old object",
+                "a strange letter",
+                "a mysterious box",
+                "a forgotten photograph"
+            ]
+        }
+
+    };
+
+
+    // ==========================================
     // UTILITIES
-    // ------------------------------------------
+    // ==========================================
 
     function random(array) {
         return array[Math.floor(Math.random() * array.length)];
@@ -397,350 +296,382 @@
 
 
     function escapeHTML(text) {
-
         return String(text)
             .replace(/&/g, "&amp;")
             .replace(/</g, "&lt;")
             .replace(/>/g, "&gt;")
             .replace(/"/g, "&quot;")
             .replace(/'/g, "&#039;");
-
     }
 
 
-    function cleanTopic(text) {
-
+    function normalize(text) {
         return String(text || "")
-            .trim()
-            .replace(/\s+/g, " ");
-
+            .toLowerCase()
+            .replace(/[ي]/g, "ی")
+            .replace(/[ك]/g, "ک")
+            .replace(/\s+/g, " ")
+            .trim();
     }
 
 
-    function capitalize(text) {
+    // ==========================================
+    // TOPIC INTELLIGENCE
+    // ==========================================
 
-        if (!text) return "";
+    function understandTopic(topic) {
 
-        return text.charAt(0).toUpperCase() + text.slice(1);
+        const t = normalize(topic);
 
-    }
-
-
-    // ------------------------------------------
-    // TOPIC ANALYSIS
-    // ------------------------------------------
-
-    function analyzeTopic(topic) {
-
-        const t = topic.toLowerCase();
-
-
-        if (
-            t.includes("خرس") ||
-            t.includes("bear")
-        ) {
-            return {
-                type: "bear",
-                character: "a boy",
-                event: "turned into a bear"
-            };
-        }
-
-
-        if (
-            t.includes("گرگ") ||
-            t.includes("wolf")
-        ) {
-            return {
-                type: "wolf",
-                character: "a young person",
-                event: "met a mysterious wolf"
-            };
-        }
-
-
-        if (
-            t.includes("گربه") ||
-            t.includes("cat")
-        ) {
-            return {
-                type: "cat",
-                character: "a young person",
-                event: "discovered a mysterious cat"
-            };
-        }
-
-
-        if (
-            t.includes("سگ") ||
-            t.includes("dog")
-        ) {
-            return {
-                type: "dog",
-                character: "a young person",
-                event: "found a mysterious dog"
-            };
-        }
-
-
-        return {
+        const result = {
             type: "general",
-            character: "a young person",
-            event: "experienced something unexpected"
+            protagonist: "a young person",
+            companion: null,
+            transformation: null,
+            kingdom: false,
+            marriage: false,
+            love: false,
+            inheritance: false,
+            animal: null,
+            mystery: false,
+            journey: false,
+            danger: false,
+            customIdea: topic
         };
 
+
+        // --------------------------------------
+        // MARRIAGE / LOVE
+        // --------------------------------------
+
+        if (
+            t.includes("ازدواج") ||
+            t.includes("ازدواج می") ||
+            t.includes("ازدواج میکن") ||
+            t.includes("ازدواج می‌کن") ||
+            t.includes("ازدواج کردند") ||
+            t.includes("عاشق")
+        ) {
+            result.marriage = true;
+            result.love = true;
+            result.type = "romance";
+        }
+
+
+        // --------------------------------------
+        // INHERITANCE / THRONE
+        // --------------------------------------
+
+        if (
+            t.includes("وارث") ||
+            t.includes("تاج و تخت") ||
+            t.includes("پادشاه") ||
+            t.includes("ملکه") ||
+            t.includes("سلطنت") ||
+            t.includes("تخت")
+        ) {
+            result.inheritance = true;
+            result.kingdom = true;
+        }
+
+
+        // --------------------------------------
+        // BEAUTIFUL GIRL
+        // --------------------------------------
+
+        if (
+            t.includes("دختر") ||
+            t.includes("زن")
+        ) {
+            result.companion = "a kind young woman";
+        }
+
+
+        // --------------------------------------
+        // BOY
+        // --------------------------------------
+
+        if (
+            t.includes("پسر") ||
+            t.includes("جوان")
+        ) {
+            result.protagonist = "a young man";
+        }
+
+
+        // --------------------------------------
+        // ANIMALS
+        // --------------------------------------
+
+        if (t.includes("خرس") || t.includes("bear")) {
+
+            result.type = "bear";
+            result.animal = "bear";
+            result.transformation = true;
+
+        }
+
+        else if (t.includes("گرگ") || t.includes("wolf")) {
+
+            result.type = "wolf";
+            result.animal = "wolf";
+
+        }
+
+        else if (t.includes("گربه") || t.includes("cat")) {
+
+            result.type = "cat";
+            result.animal = "cat";
+
+        }
+
+        else if (t.includes("سگ") || t.includes("dog")) {
+
+            result.type = "dog";
+            result.animal = "dog";
+
+        }
+
+
+        // --------------------------------------
+        // MYSTERY
+        // --------------------------------------
+
+        if (
+            t.includes("معما") ||
+            t.includes("راز") ||
+            t.includes("نامه") ||
+            t.includes("مفقود") ||
+            t.includes("گمشده")
+        ) {
+            result.mystery = true;
+        }
+
+
+        // --------------------------------------
+        // ADVENTURE
+        // --------------------------------------
+
+        if (
+            t.includes("سفر") ||
+            t.includes("ماجراجویی") ||
+            t.includes("جنگل") ||
+            t.includes("کوه") ||
+            t.includes("جزیره")
+        ) {
+            result.journey = true;
+        }
+
+
+        // --------------------------------------
+        // DANGER
+        // --------------------------------------
+
+        if (
+            t.includes("خطر") ||
+            t.includes("دشمن") ||
+            t.includes("جنگ") ||
+            t.includes("فرار")
+        ) {
+            result.danger = true;
+        }
+
+
+        return result;
+
     }
 
 
-    // ------------------------------------------
-    // TOPIC → ENGLISH IDEA
-    // ------------------------------------------
+    // ==========================================
+    // STORY ARCHETYPES
+    // ==========================================
 
-    function topicToEnglish(topic, analysis) {
+    function royalStory(info, level, length) {
 
-        if (analysis.type === "bear") {
+        const hero = info.protagonist === "a young man"
+            ? "a young man named Leo"
+            : "a young person named Leo";
 
-            return "A boy who suddenly turned into a bear";
+        const heroine = info.companion || "a kind young woman named Sophia";
 
-        }
+        const paragraphs = [
 
+            `${hero} lived a quiet life far from the royal palace. He had never imagined that his future would be connected to a kingdom.`,
 
-        if (analysis.type === "wolf") {
+            `One spring morning, he met ${heroine}. She was intelligent, kind, and different from anyone he had ever known. Their first meeting seemed ordinary, but it would change both of their lives.`,
 
-            return "A young person who met a mysterious wolf";
+            `As the years passed, they became close. They trusted each other and discovered that they shared the same dreams about the future.`,
 
-        }
+            `Eventually, they decided to get married. Their wedding was simple, but it became the beginning of a much greater story.`,
 
+            `${random(levels[level].connectors)}, an old messenger arrived at their home carrying a sealed royal letter.`,
 
-        if (analysis.type === "cat") {
+            `The letter revealed a secret that had been hidden for generations. They were connected to an ancient royal family, and the kingdom had no clear heirs.`,
 
-            return "A young person who discovered a mysterious cat";
+            `At first, they could hardly believe what they had read. They had never wanted power, wealth, or a royal title.`,
 
-        }
+            `However, the kingdom was facing a difficult moment. The people needed someone they could trust, and the old royal family had disappeared from public life.`,
 
+            `The couple traveled to the capital and entered the ancient palace together. The great hall was silent as the royal council examined the evidence.`,
 
-        if (analysis.type === "dog") {
+            `${random(levels[level].connectors)}, the council discovered that the old documents were genuine. The couple were the rightful heirs to the throne.`,
 
-            return "A young person who found a mysterious dog";
+            `They were given a choice. They could leave the kingdom behind and continue their quiet life, or they could accept the responsibility that had unexpectedly become theirs.`,
 
-        }
+            `They chose to stay. They understood that being an heir was not simply about wearing a crown. It meant protecting people, making difficult decisions, and accepting responsibility for the future.`,
 
+            `${random(levels[level].connectors)}, the kingdom began to change. The people slowly accepted their new rulers, not because of their titles, but because of the way they treated others.`,
 
-        /*
-         * For completely free topics, we do not pretend
-         * that the browser can translate Persian perfectly.
-         *
-         * Instead, we safely use the user's topic as the
-         * story concept and build an English narrative around it.
-         */
+            random(levels[level].endings)
 
-        return "A story inspired by this idea: " + topic;
+        ];
+
+        return paragraphs.slice(0, lengthCount(length));
 
     }
 
 
-    // ------------------------------------------
-    // STORY BUILDERS
-    // ------------------------------------------
+    // ==========================================
+    // BEAR STORY
+    // ==========================================
 
-    function buildBearStory(level, length, genre) {
+    function bearStory(level, length) {
 
         const name = random(names);
 
-        const place = random(
-            genreData[genre]?.places || genreData.Custom.places
-        );
+        const paragraphs = [
 
-        const paragraphs = [];
+            `${name} was an ordinary young person living near a quiet forest.`,
 
+            `One morning, ${name} woke up and discovered something impossible. His body had changed, and he had become a bear.`,
 
-        paragraphs.push(
-            `${name} lived near ${place}. One morning, something completely unexpected happened. ${name} woke up and discovered that he had turned into a bear.`
-        );
+            `${random(levels[level].connectors)}, ${name} looked into a mirror and could hardly believe what he saw.`,
 
+            `He left the house and entered the forest, hoping to find an answer.`,
 
-        paragraphs.push(
-            `${random(levelData[level].connectors)}, ${name} looked around the room in confusion. His hands were gone, and his body had changed. He was frightened, but he tried to stay calm.`
-        );
+            `Deep among the trees, ${name} discovered an old stone covered with strange symbols.`,
 
+            `${random(levels[level].connectors)}, a mysterious traveler appeared and explained that the transformation was connected to an ancient secret.`,
 
-        paragraphs.push(
-            `At first, ${name} did not know what to do. He slowly left the house and walked toward the edge of the forest.`
-        );
+            `${name} realized that returning to normal would require courage and patience.`,
 
+            `After following the clues, ${name} discovered the truth and finally found a way to break the strange spell.`,
 
-        paragraphs.push(
-            `There, ${name} discovered that being a bear had changed the way he experienced the world. He could hear distant sounds and notice things he had never noticed before.`
-        );
+            random(levels[level].endings)
 
+        ];
 
-        paragraphs.push(
-            `${random(levelData[level].connectors)}, ${name} met an old traveler who seemed to understand what had happened. The traveler told him that the transformation was connected to an old secret.`
-        );
-
-
-        paragraphs.push(
-            `The secret was not simple. ${name} had to make a difficult choice before he could return to his normal life.`
-        );
-
-
-        paragraphs.push(
-            `After thinking carefully, ${name} decided to face the problem instead of running away.`
-        );
-
-
-        paragraphs.push(
-            `${random(levelData[level].connectors)}, the strange transformation began to disappear. ${name} slowly became human again, but the experience had changed him forever.`
-        );
-
-
-        paragraphs.push(
-            random(levelData[level].endings)
-        );
-
-
-        return paragraphs;
+        return paragraphs.slice(0, lengthCount(length));
 
     }
 
 
-    function buildGeneralStory(level, genre, topic) {
+    // ==========================================
+    // GENERAL STORY
+    // ==========================================
 
-        const data = genreData[genre] || genreData.Custom;
+    function generalStory(info, genre, level, length) {
+
+        const data = genres[genre] || genres.Custom;
 
         const name = random(names);
         const place = random(data.places);
         const object = random(data.objects);
-        const problem = random(data.problems);
 
-        const idea = topicToEnglish(
-            topic,
-            analyzeTopic(topic)
-        );
+        const paragraphs = [
 
+            `${name} lived in ${place}, where life was usually calm and predictable.`,
 
-        const paragraphs = [];
+            `One day, something unexpected happened and changed the direction of ${name}'s life.`,
 
+            `${random(levels[level].connectors)}, ${name} discovered ${object}. At first, it seemed completely ordinary.`,
 
-        paragraphs.push(
-            `${name} lived in ${place}. One ordinary day, an unusual idea changed everything. ${idea}.`
-        );
+            `However, there was something unusual about it. The more ${name} examined it, the more questions appeared.`,
 
+            `${random(levels[level].connectors)}, ${name} decided to search for answers instead of ignoring the strange discovery.`,
 
-        paragraphs.push(
-            `${random(levelData[level].connectors)}, ${name} decided to find out what was really happening. The first thing ${name} noticed was ${object}.`
-        );
+            `The journey was more difficult than expected. Every new clue revealed another part of the story.`,
 
+            `Eventually, ${name} realized that the event was connected to a much larger secret.`,
 
-        paragraphs.push(
-            `${name} picked it up and looked at it carefully. Something about it seemed important, although ${name} could not explain why.`
-        );
+            `${random(levels[level].connectors)}, ${name} finally decided to face the situation directly.`,
 
+            `The final answer was not exactly what ${name} had expected, but it changed everything.`,
 
-        paragraphs.push(
-            `${random(levelData[level].connectors)}, ${name} discovered that ${problem}. This was the moment when the ordinary day became something completely different.`
-        );
+            random(levels[level].endings)
 
+        ];
 
-        paragraphs.push(
-            `${name} knew that ignoring the situation would not solve anything. So ${name} began looking for answers.`
-        );
-
-
-        paragraphs.push(
-            `The search was not easy. Every answer seemed to create another question, and the truth remained just out of reach.`
-        );
-
-
-        paragraphs.push(
-            `${random(levelData[level].connectors)}, ${name} finally discovered an important clue connected to ${object}.`
-        );
-
-
-        paragraphs.push(
-            `For the first time, the situation began to make sense. ${name} understood that the strange event had not happened by accident.`
-        );
-
-
-        paragraphs.push(
-            `After considering the possibilities, ${name} made a decision and faced the problem directly.`
-        );
-
-
-        paragraphs.push(
-            `${random(levelData[level].connectors)}, everything changed. The mystery, challenge, or conflict finally began to move toward a solution.`
-        );
-
-
-        paragraphs.push(
-            random(levelData[level].endings)
-        );
-
-
-        return paragraphs;
+        return paragraphs.slice(0, lengthCount(length));
 
     }
 
 
-    // ------------------------------------------
+    // ==========================================
+    // LENGTH
+    // ==========================================
+
+    function lengthCount(length) {
+
+        if (length === "short") return 5;
+
+        if (length === "medium") return 8;
+
+        return 14;
+
+    }
+
+
+    // ==========================================
     // TITLE
-    // ------------------------------------------
+    // ==========================================
 
-    function makeTitle(topic, genre, analysis) {
+    function createTitle(info, genre) {
 
-        if (analysis.type === "bear") {
+        if (info.inheritance && info.marriage) {
+            return "The Unexpected Heirs";
+        }
 
+        if (info.type === "bear") {
             return "The Boy Who Became a Bear";
-
         }
 
-
-        if (analysis.type === "wolf") {
-
-            return "The Mystery of the Wolf";
-
+        if (info.type === "wolf") {
+            return "The Wolf in the Forest";
         }
 
-
-        if (analysis.type === "cat") {
-
+        if (info.type === "cat") {
             return "The Mysterious Cat";
-
         }
 
-
-        if (analysis.type === "dog") {
-
+        if (info.type === "dog") {
             return "The Mysterious Dog";
-
         }
-
 
         const titles = {
 
             Fantasy: "The Secret Beyond the Kingdom",
-            Mystery: "The Mystery of the Hidden Clue",
+            Mystery: "The Hidden Secret",
             Adventure: "The Journey Beyond the Unknown",
             Horror: "The Secret in the Darkness",
             Crime: "The Missing Evidence",
             Drama: "The Day Everything Changed",
             Comedy: "The Most Unexpected Day",
-            Romance: "A Story That Changed Everything",
+            Romance: "A Story of Two Hearts",
             "Science Fiction": "The Signal from Beyond",
             Historical: "The Secret of the Kingdom",
             Custom: "The Unexpected Story"
 
         };
 
-
         return titles[genre] || "The Unexpected Story";
 
     }
 
 
-    // ------------------------------------------
-    // MAIN GENERATOR
-    // ------------------------------------------
+    // ==========================================
+    // GENERATOR
+    // ==========================================
 
     function generateStory() {
 
@@ -753,10 +684,7 @@
         }
 
 
-        const genre = genreSelect.value;
-        const topic = cleanTopic(topicInput.value);
-        const length = lengthSelect.value;
-
+        const topic = topicInput.value.trim();
 
         if (!topic) {
 
@@ -769,60 +697,70 @@
         }
 
 
-        const analysis = analyzeTopic(topic);
+        const genre = genreSelect.value;
+        const length = lengthSelect.value;
 
+        const info = understandTopic(topic);
 
         let paragraphs;
 
 
-        if (analysis.type !== "general") {
+        // --------------------------------------
+        // SPECIAL STORY: ROYAL + MARRIAGE
+        // --------------------------------------
 
-            paragraphs = buildBearStory(
+        if (
+            info.marriage &&
+            info.inheritance &&
+            info.kingdom
+        ) {
+
+            paragraphs = royalStory(
+                info,
                 selectedLevel,
-                length,
-                genre
+                length
             );
 
-        } else {
+        }
 
-            paragraphs = buildGeneralStory(
+
+        // --------------------------------------
+        // SPECIAL STORY: BEAR
+        // --------------------------------------
+
+        else if (info.type === "bear") {
+
+            paragraphs = bearStory(
                 selectedLevel,
+                length
+            );
+
+        }
+
+
+        // --------------------------------------
+        // GENERAL
+        // --------------------------------------
+
+        else {
+
+            paragraphs = generalStory(
+                info,
                 genre,
-                topic
+                selectedLevel,
+                length
             );
 
         }
 
 
-        let count;
-
-
-        if (length === "short") {
-
-            count = 5;
-
-        } else if (length === "medium") {
-
-            count = 8;
-
-        } else {
-
-            count = paragraphs.length;
-
-        }
-
-
-        paragraphs = paragraphs.slice(0, count);
-
-
-        const title = makeTitle(
-            topic,
-            genre,
-            analysis
+        const title = createTitle(
+            info,
+            genre
         );
 
 
-        const html = `
+        storyText.innerHTML = `
 
             <div class="story-info">
 
@@ -853,8 +791,7 @@
 
                 ${paragraphs
                     .map(
-                        paragraph =>
-                            `<p>${escapeHTML(paragraph)}</p>`
+                        p => `<p>${escapeHTML(p)}</p>`
                     )
                     .join("")}
 
@@ -863,9 +800,8 @@
         `;
 
 
-        storyText.innerHTML = html;
-
         storyResult.classList.remove("hidden");
+
 
         storyResult.scrollIntoView({
             behavior: "smooth",
@@ -875,20 +811,17 @@
     }
 
 
-    // ------------------------------------------
+    // ==========================================
     // LEVEL BUTTONS
-    // ------------------------------------------
+    // ==========================================
 
     levelButtons.forEach(button => {
 
         button.addEventListener("click", () => {
 
             levelButtons.forEach(btn => {
-
                 btn.classList.remove("active");
-
             });
-
 
             button.classList.add("active");
 
@@ -899,9 +832,9 @@
     });
 
 
-    // ------------------------------------------
-    // GENERATE BUTTON
-    // ------------------------------------------
+    // ==========================================
+    // GENERATE
+    // ==========================================
 
     generateButton.addEventListener(
         "click",
@@ -909,38 +842,16 @@
     );
 
 
-    // ------------------------------------------
-    // ENTER SHORTCUT
-    // ------------------------------------------
-
-    topicInput.addEventListener(
-        "keydown",
-        event => {
-
-            if (
-                (event.ctrlKey || event.metaKey) &&
-                event.key === "Enter"
-            ) {
-
-                generateStory();
-
-            }
-
-        }
-    );
-
-
-    // ------------------------------------------
+    // ==========================================
     // PUBLIC API
-    // ------------------------------------------
+    // ==========================================
 
     window.RangoStoryEngine = {
 
         generate: generateStory,
 
-        version: "3.0.0"
+        version: "4.0.0"
 
     };
-
 
 })();
