@@ -1,139 +1,122 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+// ===============================
+// RENGO - Story Generator
+// ===============================
 
-    <title>LevelTale — Learn English Through Stories</title>
+// سطح انتخاب‌شده
+let selectedLevel = null;
 
-    <link rel="stylesheet" href="style.css">
-</head>
+// دکمه‌های سطح زبان
+const levelButtons = document.querySelectorAll(".level");
 
-<body>
+// انتخاب سطح زبان
+levelButtons.forEach((button) => {
+    button.addEventListener("click", () => {
 
-    <header class="navbar">
-        <div class="logo">LevelTale</div>
+        // حذف حالت انتخاب از همه دکمه‌ها
+        levelButtons.forEach((btn) => {
+            btn.classList.remove("selected");
+        });
 
-        <nav>
-            <a href="#">Home</a>
-            <a href="#">Stories</a>
-            <a href="#">About</a>
-        </nav>
-    </header>
+        // انتخاب دکمه فعلی
+        button.classList.add("selected");
+
+        // ذخیره سطح
+        selectedLevel = button.dataset.level;
+    });
+});
 
 
-    <main>
+// عناصر صفحه
+const genre = document.getElementById("genre");
+const topic = document.getElementById("topic");
+const length = document.getElementById("length");
 
-        <section class="hero">
+const generateButton = document.getElementById("generateButton");
 
-            <p class="badge">AI STORIES FOR ENGLISH LEARNERS</p>
+const storyResult = document.getElementById("storyResult");
+const storyText = document.getElementById("storyText");
 
-            <h1>
-                Your level.<br>
-                Your story.
-            </h1>
 
-            <p class="subtitle">
-                Create personalized English stories based on your language level,
-                genre and imagination.
+// ساخت داستان
+generateButton.addEventListener("click", () => {
+
+    // بررسی انتخاب سطح
+    if (!selectedLevel) {
+        alert("لطفاً ابتدا سطح زبانت را انتخاب کن.");
+        return;
+    }
+
+    // بررسی موضوع
+    if (!topic.value.trim()) {
+        alert("لطفاً موضوع داستانت را بنویس.");
+        topic.focus();
+        return;
+    }
+
+
+    // دریافت اطلاعات
+    const selectedGenre = genre.value;
+    const selectedTopic = topic.value.trim();
+    const selectedLength = length.value;
+
+
+    // نمایش نتیجه
+    storyResult.classList.remove("hidden");
+
+
+    storyText.innerHTML = `
+        <div class="story-info">
+
+            <p>
+                <strong>سطح:</strong>
+                ${selectedLevel}
             </p>
 
-        </section>
+            <p>
+                <strong>ژانر:</strong>
+                ${selectedGenre}
+            </p>
+
+            <p>
+                <strong>طول:</strong>
+                ${selectedLength}
+            </p>
+
+        </div>
+
+        <hr>
+
+        <h3>✨ داستان در حال آماده‌سازی است...</h3>
+
+        <p>
+            موضوع انتخابی تو:
+            <strong>${escapeHTML(selectedTopic)}</strong>
+        </p>
+
+        <p>
+            در مرحله بعد، هوش مصنوعی رنگو به این بخش متصل می‌شود
+            و یک داستان انگلیسی متناسب با سطح
+            <strong>${selectedLevel}</strong>
+            تو تولید می‌کند.
+        </p>
+    `;
 
 
-        <section class="story-box">
+    // رفتن به قسمت داستان
+    storyResult.scrollIntoView({
+        behavior: "smooth",
+        block: "start"
+    });
 
-            <h2>Create your story</h2>
-
-            <!-- Language Level -->
-
-            <label>English Level</label>
-
-            <div class="levels">
-
-                <button class="level" data-level="A1">A1</button>
-                <button class="level" data-level="A2">A2</button>
-                <button class="level" data-level="B1">B1</button>
-                <button class="level" data-level="B2">B2</button>
-                <button class="level" data-level="C1">C1</button>
-                <button class="level" data-level="C2">C2</button>
-
-            </div>
+});
 
 
-            <!-- Genre -->
+// جلوگیری از ورود HTML خطرناک در موضوع کاربر
+function escapeHTML(text) {
 
-            <label>Genre</label>
+    const div = document.createElement("div");
 
-            <select id="genre">
+    div.textContent = text;
 
-                <option value="Fantasy">Fantasy</option>
-                <option value="Mystery">Mystery</option>
-                <option value="Adventure">Adventure</option>
-                <option value="Horror">Horror</option>
-                <option value="Crime">Crime</option>
-                <option value="Drama">Drama</option>
-                <option value="Comedy">Comedy</option>
-                <option value="Romance">Romance</option>
-                <option value="Science Fiction">Science Fiction</option>
-                <option value="Historical">Historical</option>
-
-            </select>
-
-
-            <!-- Custom Topic -->
-
-            <label>Your idea</label>
-
-            <textarea
-                id="topic"
-                placeholder="Example: A boy who suddenly became a bear..."
-            ></textarea>
-
-
-            <!-- Length -->
-
-            <label>Story Length</label>
-
-            <select id="length">
-
-                <option value="short">Short</option>
-                <option value="medium">Medium</option>
-                <option value="long">Long</option>
-
-            </select>
-
-
-            <button id="generateButton" class="generate">
-
-                ✨ Create My Story
-
-            </button>
-
-        </section>
-
-
-        <!-- Story Result -->
-
-        <section id="storyResult" class="story-result hidden">
-
-            <h2>Your Story</h2>
-
-            <div id="storyText"></div>
-
-        </section>
-
-    </main>
-
-
-    <footer>
-
-        <p>© 2026 LevelTale</p>
-
-    </footer>
-
-
-    <script src="script.js"></script>
-
-</body>
-</html>
+    return div.innerHTML;
+}
