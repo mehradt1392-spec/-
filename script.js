@@ -1,5 +1,6 @@
 // ==========================================
-// RENGO — STORY INTELLIGENCE ENGINE v4
+// RENGO — STORY ENGINE v5
+// Complete endings + level-aware stories
 // Local • No API • No Backend
 // ==========================================
 
@@ -19,93 +20,68 @@
 
 
     // ==========================================
-    // NAMES
+    // LEVELS
     // ==========================================
 
-    const names = [
-        "Leo", "Mia", "Noah", "Emma",
-        "Liam", "Zara", "Ethan", "Ivy",
-        "Oliver", "Lina", "Daniel", "Sophia"
-    ];
-
-
-    // ==========================================
-    // LEVEL SYSTEM
-    // ==========================================
-
-    const levels = {
+    const levelData = {
 
         A1: {
             connectors: ["Then", "But", "So", "After that"],
+            style: "simple",
             endings: [
-                "In the end, they were happy.",
-                "At the end, everything was safe.",
-                "From that day on, their lives were different."
+                "In the end, everything was safe.",
+                "Finally, he was happy to be home.",
+                "From that day on, his life was different."
             ]
         },
 
         A2: {
             connectors: ["Then", "However", "After that", "Because of this"],
+            style: "simple",
             endings: [
-                "In the end, they understood the truth.",
-                "Finally, everything became clear.",
-                "From that day on, they never forgot what happened."
+                "In the end, he understood what had happened.",
+                "Finally, the problem was solved.",
+                "From that day on, he never forgot his strange adventure."
             ]
         },
 
         B1: {
-            connectors: [
-                "Meanwhile",
-                "However",
-                "A few minutes later",
-                "Because of this"
-            ],
+            connectors: ["Meanwhile", "However", "A few minutes later", "Because of this"],
+            style: "natural",
             endings: [
-                "In the end, the experience changed their lives.",
-                "After that day, nothing felt quite the same.",
-                "Eventually, they understood what had really happened."
+                "In the end, he understood the lesson behind his strange experience.",
+                "After that day, he never looked at the forest in the same way.",
+                "Eventually, everything returned to normal, but the memory stayed with him."
             ]
         },
 
         B2: {
-            connectors: [
-                "Meanwhile",
-                "Nevertheless",
-                "As a result",
-                "A moment later"
-            ],
+            connectors: ["Meanwhile", "Nevertheless", "As a result", "A moment later"],
+            style: "detailed",
             endings: [
-                "In the end, the experience changed their understanding of the world.",
-                "From that moment forward, they knew that their lives had changed.",
-                "Eventually, the truth became impossible to ignore."
+                "In the end, the experience changed the way he understood himself and the world around him.",
+                "From that moment forward, he knew that some experiences could change a person forever.",
+                "Eventually, the truth became clear, and he finally understood why the transformation had happened."
             ]
         },
 
         C1: {
-            connectors: [
-                "Meanwhile",
-                "Nevertheless",
-                "Consequently",
-                "Without warning"
-            ],
+            connectors: ["Meanwhile", "Nevertheless", "Consequently", "Without warning"],
+            style: "advanced",
             endings: [
-                "In the end, the experience revealed something none of them had expected.",
-                "From that moment onward, they understood that the past could never simply be forgotten.",
-                "Eventually, the truth emerged, although it was far more complicated than anyone had imagined."
+                "In the end, the experience became a turning point that permanently changed his understanding of himself.",
+                "From that moment onward, he understood that the strange event had been a lesson rather than a curse.",
+                "Eventually, the truth emerged, leaving him with a new understanding of courage, identity, and choice."
             ]
         },
 
         C2: {
-            connectors: [
-                "Meanwhile",
-                "Nevertheless",
-                "Consequently",
-                "Unexpectedly"
-            ],
+            connectors: ["Meanwhile", "Nevertheless", "Consequently", "Unexpectedly"],
+            style: "literary",
             endings: [
-                "In the end, the experience became a turning point that permanently altered their understanding of the world.",
-                "From that moment onward, nothing could return to the way it had been before.",
-                "Eventually, the truth surfaced, carrying consequences far beyond anything they had originally anticipated."
+                "In the end, the transformation became a defining moment that permanently altered his understanding of identity and freedom.",
+                "From that moment onward, he no longer saw the experience as a curse, but as a strange chapter in the story of his life.",
+                "Eventually, the truth revealed itself, carrying a meaning far deeper than he had initially imagined."
             ]
         }
 
@@ -113,23 +89,41 @@
 
 
     // ==========================================
+    // NAMES
+    // ==========================================
+
+    const names = [
+        "Leo",
+        "Noah",
+        "Ethan",
+        "Oliver",
+        "Daniel",
+        "Liam",
+        "Mia",
+        "Emma",
+        "Zara",
+        "Ivy"
+    ];
+
+
+    // ==========================================
     // GENRES
     // ==========================================
 
-    const genres = {
+    const genreData = {
 
         Fantasy: {
             places: [
+                "a quiet village beside a silver lake",
                 "an ancient kingdom",
-                "a forgotten castle",
-                "a village beside a silver lake",
-                "a mysterious royal city"
+                "a mysterious forest",
+                "a small village near an old castle"
             ],
             objects: [
-                "an ancient crown",
-                "a magical ring",
-                "a forgotten royal letter",
-                "an old golden key"
+                "an ancient stone",
+                "a mysterious book",
+                "a silver key",
+                "a strange golden ring"
             ]
         },
 
@@ -138,12 +132,12 @@
                 "a quiet town",
                 "an old mansion",
                 "a small hotel",
-                "a silent neighborhood"
+                "a forgotten neighborhood"
             ],
             objects: [
-                "a mysterious letter",
                 "an old photograph",
                 "a locked box",
+                "a mysterious letter",
                 "a broken watch"
             ]
         },
@@ -153,7 +147,7 @@
                 "a remote island",
                 "a huge mountain",
                 "a forgotten valley",
-                "a dangerous jungle"
+                "a dangerous forest"
             ],
             objects: [
                 "an old compass",
@@ -174,21 +168,21 @@
                 "an old mirror",
                 "a strange key",
                 "a dusty photograph",
-                "a locked box"
+                "a locked wooden box"
             ]
         },
 
         Crime: {
             places: [
-                "a large city",
+                "a busy city",
                 "a quiet neighborhood",
                 "an old warehouse",
                 "a police station"
             ],
             objects: [
                 "a missing file",
-                "an old photograph",
                 "a secret note",
+                "an old photograph",
                 "a broken watch"
             ]
         },
@@ -197,8 +191,8 @@
             places: [
                 "a small town",
                 "a family home",
-                "a busy city",
-                "a quiet village"
+                "a quiet village",
+                "a busy city"
             ],
             objects: [
                 "an old photograph",
@@ -217,9 +211,9 @@
             ],
             objects: [
                 "a broken phone",
-                "a giant sandwich",
                 "a strange hat",
-                "an old bicycle"
+                "an old bicycle",
+                "a giant sandwich"
             ]
         },
 
@@ -258,7 +252,7 @@
                 "a royal palace",
                 "a medieval city",
                 "a small village",
-                "an old European kingdom"
+                "an ancient kingdom"
             ],
             objects: [
                 "a royal crown",
@@ -271,8 +265,8 @@
         Custom: {
             places: [
                 "a quiet town",
-                "a large city",
                 "a small village",
+                "a large city",
                 "a distant place"
             ],
             objects: [
@@ -287,7 +281,7 @@
 
 
     // ==========================================
-    // UTILITIES
+    // HELPERS
     // ==========================================
 
     function random(array) {
@@ -306,166 +300,115 @@
 
 
     function normalize(text) {
+
         return String(text || "")
             .toLowerCase()
             .replace(/[ي]/g, "ی")
             .replace(/[ك]/g, "ک")
             .replace(/\s+/g, " ")
             .trim();
+
     }
 
 
     // ==========================================
-    // TOPIC INTELLIGENCE
+    // TOPIC ANALYSIS
     // ==========================================
 
-    function understandTopic(topic) {
+    function analyzeTopic(topic) {
 
         const t = normalize(topic);
 
-        const result = {
-            type: "general",
+        const info = {
+
             protagonist: "a young person",
+
             companion: null,
-            transformation: null,
-            kingdom: false,
+
+            bear: false,
+
             marriage: false,
-            love: false,
+
             inheritance: false,
-            animal: null,
+
+            kingdom: false,
+
             mystery: false,
+
             journey: false,
-            danger: false,
-            customIdea: topic
+
+            danger: false
+
         };
 
 
-        // --------------------------------------
-        // MARRIAGE / LOVE
-        // --------------------------------------
+        if (
+            t.includes("پسر") ||
+            t.includes("جوان")
+        ) {
+            info.protagonist = "a young man";
+        }
+
+
+        if (
+            t.includes("دختر") ||
+            t.includes("زن")
+        ) {
+            info.companion = "a young woman";
+        }
+
+
+        if (
+            t.includes("خرس") ||
+            t.includes("bear")
+        ) {
+            info.bear = true;
+        }
+
 
         if (
             t.includes("ازدواج") ||
             t.includes("ازدواج می") ||
-            t.includes("ازدواج میکن") ||
-            t.includes("ازدواج می‌کن") ||
-            t.includes("ازدواج کردند") ||
-            t.includes("عاشق")
+            t.includes("ازدواج کرد") ||
+            t.includes("عروسی")
         ) {
-            result.marriage = true;
-            result.love = true;
-            result.type = "romance";
+            info.marriage = true;
         }
 
-
-        // --------------------------------------
-        // INHERITANCE / THRONE
-        // --------------------------------------
 
         if (
             t.includes("وارث") ||
             t.includes("تاج و تخت") ||
             t.includes("پادشاه") ||
             t.includes("ملکه") ||
-            t.includes("سلطنت") ||
-            t.includes("تخت")
+            t.includes("سلطنت")
         ) {
-            result.inheritance = true;
-            result.kingdom = true;
+            info.inheritance = true;
+            info.kingdom = true;
         }
 
-
-        // --------------------------------------
-        // BEAUTIFUL GIRL
-        // --------------------------------------
 
         if (
-            t.includes("دختر") ||
-            t.includes("زن")
-        ) {
-            result.companion = "a kind young woman";
-        }
-
-
-        // --------------------------------------
-        // BOY
-        // --------------------------------------
-
-        if (
-            t.includes("پسر") ||
-            t.includes("جوان")
-        ) {
-            result.protagonist = "a young man";
-        }
-
-
-        // --------------------------------------
-        // ANIMALS
-        // --------------------------------------
-
-        if (t.includes("خرس") || t.includes("bear")) {
-
-            result.type = "bear";
-            result.animal = "bear";
-            result.transformation = true;
-
-        }
-
-        else if (t.includes("گرگ") || t.includes("wolf")) {
-
-            result.type = "wolf";
-            result.animal = "wolf";
-
-        }
-
-        else if (t.includes("گربه") || t.includes("cat")) {
-
-            result.type = "cat";
-            result.animal = "cat";
-
-        }
-
-        else if (t.includes("سگ") || t.includes("dog")) {
-
-            result.type = "dog";
-            result.animal = "dog";
-
-        }
-
-
-        // --------------------------------------
-        // MYSTERY
-        // --------------------------------------
-
-        if (
-            t.includes("معما") ||
             t.includes("راز") ||
+            t.includes("معما") ||
             t.includes("نامه") ||
-            t.includes("مفقود") ||
-            t.includes("گمشده")
+            t.includes("گمشده") ||
+            t.includes("مفقود")
         ) {
-            result.mystery = true;
+            info.mystery = true;
         }
 
-
-        // --------------------------------------
-        // ADVENTURE
-        // --------------------------------------
 
         if (
             t.includes("سفر") ||
-            t.includes("ماجراجویی") ||
             t.includes("جنگل") ||
             t.includes("کوه") ||
-            t.includes("جزیره")
+            t.includes("جزیره") ||
+            t.includes("ماجراجویی")
         ) {
-            result.journey = true;
+            info.journey = true;
         }
 
-
-        // --------------------------------------
-        // DANGER
-        // --------------------------------------
 
         if (
             t.includes("خطر") ||
@@ -473,136 +416,11 @@
             t.includes("جنگ") ||
             t.includes("فرار")
         ) {
-            result.danger = true;
+            info.danger = true;
         }
 
 
-        return result;
-
-    }
-
-
-    // ==========================================
-    // STORY ARCHETYPES
-    // ==========================================
-
-    function royalStory(info, level, length) {
-
-        const hero = info.protagonist === "a young man"
-            ? "a young man named Leo"
-            : "a young person named Leo";
-
-        const heroine = info.companion || "a kind young woman named Sophia";
-
-        const paragraphs = [
-
-            `${hero} lived a quiet life far from the royal palace. He had never imagined that his future would be connected to a kingdom.`,
-
-            `One spring morning, he met ${heroine}. She was intelligent, kind, and different from anyone he had ever known. Their first meeting seemed ordinary, but it would change both of their lives.`,
-
-            `As the years passed, they became close. They trusted each other and discovered that they shared the same dreams about the future.`,
-
-            `Eventually, they decided to get married. Their wedding was simple, but it became the beginning of a much greater story.`,
-
-            `${random(levels[level].connectors)}, an old messenger arrived at their home carrying a sealed royal letter.`,
-
-            `The letter revealed a secret that had been hidden for generations. They were connected to an ancient royal family, and the kingdom had no clear heirs.`,
-
-            `At first, they could hardly believe what they had read. They had never wanted power, wealth, or a royal title.`,
-
-            `However, the kingdom was facing a difficult moment. The people needed someone they could trust, and the old royal family had disappeared from public life.`,
-
-            `The couple traveled to the capital and entered the ancient palace together. The great hall was silent as the royal council examined the evidence.`,
-
-            `${random(levels[level].connectors)}, the council discovered that the old documents were genuine. The couple were the rightful heirs to the throne.`,
-
-            `They were given a choice. They could leave the kingdom behind and continue their quiet life, or they could accept the responsibility that had unexpectedly become theirs.`,
-
-            `They chose to stay. They understood that being an heir was not simply about wearing a crown. It meant protecting people, making difficult decisions, and accepting responsibility for the future.`,
-
-            `${random(levels[level].connectors)}, the kingdom began to change. The people slowly accepted their new rulers, not because of their titles, but because of the way they treated others.`,
-
-            random(levels[level].endings)
-
-        ];
-
-        return paragraphs.slice(0, lengthCount(length));
-
-    }
-
-
-    // ==========================================
-    // BEAR STORY
-    // ==========================================
-
-    function bearStory(level, length) {
-
-        const name = random(names);
-
-        const paragraphs = [
-
-            `${name} was an ordinary young person living near a quiet forest.`,
-
-            `One morning, ${name} woke up and discovered something impossible. His body had changed, and he had become a bear.`,
-
-            `${random(levels[level].connectors)}, ${name} looked into a mirror and could hardly believe what he saw.`,
-
-            `He left the house and entered the forest, hoping to find an answer.`,
-
-            `Deep among the trees, ${name} discovered an old stone covered with strange symbols.`,
-
-            `${random(levels[level].connectors)}, a mysterious traveler appeared and explained that the transformation was connected to an ancient secret.`,
-
-            `${name} realized that returning to normal would require courage and patience.`,
-
-            `After following the clues, ${name} discovered the truth and finally found a way to break the strange spell.`,
-
-            random(levels[level].endings)
-
-        ];
-
-        return paragraphs.slice(0, lengthCount(length));
-
-    }
-
-
-    // ==========================================
-    // GENERAL STORY
-    // ==========================================
-
-    function generalStory(info, genre, level, length) {
-
-        const data = genres[genre] || genres.Custom;
-
-        const name = random(names);
-        const place = random(data.places);
-        const object = random(data.objects);
-
-        const paragraphs = [
-
-            `${name} lived in ${place}, where life was usually calm and predictable.`,
-
-            `One day, something unexpected happened and changed the direction of ${name}'s life.`,
-
-            `${random(levels[level].connectors)}, ${name} discovered ${object}. At first, it seemed completely ordinary.`,
-
-            `However, there was something unusual about it. The more ${name} examined it, the more questions appeared.`,
-
-            `${random(levels[level].connectors)}, ${name} decided to search for answers instead of ignoring the strange discovery.`,
-
-            `The journey was more difficult than expected. Every new clue revealed another part of the story.`,
-
-            `Eventually, ${name} realized that the event was connected to a much larger secret.`,
-
-            `${random(levels[level].connectors)}, ${name} finally decided to face the situation directly.`,
-
-            `The final answer was not exactly what ${name} had expected, but it changed everything.`,
-
-            random(levels[level].endings)
-
-        ];
-
-        return paragraphs.slice(0, lengthCount(length));
+        return info;
 
     }
 
@@ -611,13 +429,413 @@
     // LENGTH
     // ==========================================
 
-    function lengthCount(length) {
+    function getLength(length) {
 
-        if (length === "short") return 5;
+        if (length === "short") {
+            return {
+                opening: 1,
+                development: 2,
+                climax: 1,
+                ending: 1
+            };
+        }
 
-        if (length === "medium") return 8;
+        if (length === "medium") {
+            return {
+                opening: 2,
+                development: 4,
+                climax: 2,
+                ending: 2
+            };
+        }
 
-        return 14;
+        return {
+            opening: 3,
+            development: 7,
+            climax: 3,
+            ending: 2
+        };
+
+    }
+
+
+    // ==========================================
+    // BEAR STORY
+    // ==========================================
+
+    function createBearStory(level, length) {
+
+        const name = random(names);
+        const style = levelData[level];
+        const count = getLength(length);
+
+        const story = [];
+
+
+        // OPENING
+
+        story.push(
+            `${name} was an ordinary young man who lived near a quiet forest. One morning, he woke up and discovered something impossible: he had turned into a bear.`
+        );
+
+
+        if (count.opening > 1) {
+
+            story.push(
+                `At first, ${name} could not understand what had happened. He looked at his reflection and realized that his entire body had changed.`
+            );
+
+        }
+
+
+        // DEVELOPMENT
+
+        story.push(
+            `${random(style.connectors)}, ${name} left his home and entered the forest, hoping to find an explanation.`
+        );
+
+
+        if (count.development > 1) {
+
+            story.push(
+                `Deep among the trees, he discovered an ancient stone covered with strange symbols.`
+            );
+
+        }
+
+
+        if (count.development > 2) {
+
+            story.push(
+                `The symbols seemed to tell the story of an old spell that could transform a person into an animal.`
+            );
+
+        }
+
+
+        if (count.development > 3) {
+
+            story.push(
+                `${random(style.connectors)}, an old traveler appeared and told ${name} that the transformation had a purpose.`
+            );
+
+        }
+
+
+        if (count.development > 4) {
+
+            story.push(
+                `According to the traveler, ${name} could return to normal only if he faced the fear that had been controlling his life.`
+            );
+
+        }
+
+
+        if (count.development > 5) {
+
+            story.push(
+                `${name} realized that he had spent years avoiding difficult choices. For the first time, he decided to face his fears instead of running away.`
+            );
+
+        }
+
+
+        if (count.development > 6) {
+
+            story.push(
+                `He touched the ancient stone and promised himself that he would no longer let fear decide his future.`
+            );
+
+        }
+
+
+        // CLIMAX
+
+        story.push(
+            `${random(style.connectors)}, the strange symbols began to glow. The forest became completely silent, and the spell finally began to disappear.`
+        );
+
+
+        if (count.climax > 1) {
+
+            story.push(
+                `${name} slowly returned to his human form. He understood that the transformation had never been only about becoming a bear; it had forced him to become braver.`
+            );
+
+        }
+
+
+        if (count.climax > 2) {
+
+            story.push(
+                `When the sun rose above the trees, ${name} walked home with a completely different view of his life.`
+            );
+
+        }
+
+
+        // ENDING — ALWAYS INCLUDED
+
+        story.push(
+            random(style.endings)
+        );
+
+
+        return story;
+
+    }
+
+
+    // ==========================================
+    // ROYAL LOVE STORY
+    // ==========================================
+
+    function createRoyalStory(level, length) {
+
+        const style = levelData[level];
+        const count = getLength(length);
+
+        const story = [];
+
+
+        // OPENING
+
+        story.push(
+            `Leo was a young man who lived far from the royal palace. He had never imagined that one day he would become part of the history of a kingdom.`
+        );
+
+
+        story.push(
+            `One day, he met Sophia, a kind and intelligent young woman. Their friendship slowly became something deeper, and they began to imagine a future together.`
+        );
+
+
+        // DEVELOPMENT
+
+        story.push(
+            `${random(style.connectors)}, they decided to get married and build a quiet life together.`
+        );
+
+
+        story.push(
+            `Their peaceful life changed when an old messenger arrived with a sealed royal letter.`
+        );
+
+
+        if (count.development > 2) {
+
+            story.push(
+                `The letter contained a secret that had been hidden for generations. Both Leo and Sophia were connected to an ancient royal family.`
+            );
+
+        }
+
+
+        if (count.development > 3) {
+
+            story.push(
+                `At first, they believed the letter was a mistake. They had never lived like royalty and had never expected to inherit a kingdom.`
+            );
+
+        }
+
+
+        if (count.development > 4) {
+
+            story.push(
+                `${random(style.connectors)}, they traveled to the royal capital to meet the council and discover the truth.`
+            );
+
+        }
+
+
+        if (count.development > 5) {
+
+            story.push(
+                `Inside the ancient palace, the council showed them old documents proving that they were the rightful heirs to the throne.`
+            );
+
+        }
+
+
+        if (count.development > 6) {
+
+            story.push(
+                `The discovery created a difficult choice. They could return to their peaceful life, or accept the responsibility of becoming the new heirs of the kingdom.`
+            );
+
+        }
+
+
+        // CLIMAX
+
+        story.push(
+            `After a long discussion, they chose to accept the responsibility. They understood that wearing a crown was not about wealth or power, but about protecting the people who depended on them.`
+        );
+
+
+        if (count.climax > 1) {
+
+            story.push(
+                `${random(style.connectors)}, they stood before the people of the kingdom and promised to rule with fairness and courage.`
+            );
+
+        }
+
+
+        if (count.climax > 2) {
+
+            story.push(
+                `The people welcomed them, and the ancient kingdom finally had new heirs who cared more about its future than their own comfort.`
+            );
+
+        }
+
+
+        // ENDING
+
+        story.push(
+            `Years later, Leo and Sophia looked back on the day they had met and realized how unexpectedly their lives had changed. They had begun as two ordinary people, but together they had become the hope of an entire kingdom.`
+        );
+
+
+        story.push(
+            random(style.endings)
+        );
+
+
+        return story;
+
+    }
+
+
+    // ==========================================
+    // GENERAL STORY
+    // ==========================================
+
+    function createGeneralStory(level, genre, length) {
+
+        const style = levelData[level];
+        const data = genreData[genre] || genreData.Custom;
+        const name = random(names);
+        const place = random(data.places);
+        const object = random(data.objects);
+        const count = getLength(length);
+
+        const story = [];
+
+
+        story.push(
+            `${name} lived in ${place}, where life was usually calm and predictable.`
+        );
+
+
+        if (count.opening > 1) {
+
+            story.push(
+                `One day, ${name} discovered ${object}, and immediately felt that something about it was unusual.`
+            );
+
+        }
+
+
+        story.push(
+            `${random(style.connectors)}, ${name} decided to find out where it had come from.`
+        );
+
+
+        if (count.development > 1) {
+
+            story.push(
+                `The search led ${name} to a place he had never visited before.`
+            );
+
+        }
+
+
+        if (count.development > 2) {
+
+            story.push(
+                `There, he discovered a clue that made the situation even more mysterious.`
+            );
+
+        }
+
+
+        if (count.development > 3) {
+
+            story.push(
+                `${random(style.connectors)}, ${name} realized that the strange discovery was connected to an old secret.`
+            );
+
+        }
+
+
+        if (count.development > 4) {
+
+            story.push(
+                `The closer ${name} came to the truth, the more difficult the journey became.`
+            );
+
+        }
+
+
+        if (count.development > 5) {
+
+            story.push(
+                `For a moment, ${name} considered giving up, but he decided to continue.`
+            );
+
+        }
+
+
+        if (count.development > 6) {
+
+            story.push(
+                `Eventually, the final clue showed him what had really happened.`
+            );
+
+        }
+
+
+        // CLIMAX
+
+        story.push(
+            `${random(style.connectors)}, ${name} faced the main problem and made a difficult decision.`
+        );
+
+
+        if (count.climax > 1) {
+
+            story.push(
+                `The decision changed the situation and finally gave ${name} a chance to solve the problem.`
+            );
+
+        }
+
+
+        if (count.climax > 2) {
+
+            story.push(
+                `When everything was finally over, ${name} understood why the strange journey had been necessary.`
+            );
+
+        }
+
+
+        // ENDING
+
+        story.push(
+            random(style.endings)
+        );
+
+
+        story.push(
+            `The memory of that day remained with ${name}, reminding him that even an ordinary life could suddenly become an extraordinary story.`
+        );
+
+
+        return story;
 
     }
 
@@ -628,41 +846,45 @@
 
     function createTitle(info, genre) {
 
-        if (info.inheritance && info.marriage) {
-            return "The Unexpected Heirs";
-        }
-
-        if (info.type === "bear") {
+        if (info.bear) {
             return "The Boy Who Became a Bear";
         }
 
-        if (info.type === "wolf") {
-            return "The Wolf in the Forest";
+
+        if (
+            info.marriage &&
+            info.inheritance
+        ) {
+            return "The Unexpected Heirs";
         }
 
-        if (info.type === "cat") {
-            return "The Mysterious Cat";
-        }
-
-        if (info.type === "dog") {
-            return "The Mysterious Dog";
-        }
 
         const titles = {
 
             Fantasy: "The Secret Beyond the Kingdom",
+
             Mystery: "The Hidden Secret",
+
             Adventure: "The Journey Beyond the Unknown",
+
             Horror: "The Secret in the Darkness",
+
             Crime: "The Missing Evidence",
+
             Drama: "The Day Everything Changed",
+
             Comedy: "The Most Unexpected Day",
+
             Romance: "A Story of Two Hearts",
+
             "Science Fiction": "The Signal from Beyond",
+
             Historical: "The Secret of the Kingdom",
+
             Custom: "The Unexpected Story"
 
         };
+
 
         return titles[genre] || "The Unexpected Story";
 
@@ -670,7 +892,7 @@
 
 
     // ==========================================
-    // GENERATOR
+    // MAIN GENERATOR
     // ==========================================
 
     function generateStory() {
@@ -686,6 +908,7 @@
 
         const topic = topicInput.value.trim();
 
+
         if (!topic) {
 
             alert("لطفاً موضوع داستان را بنویس.");
@@ -700,54 +923,40 @@
         const genre = genreSelect.value;
         const length = lengthSelect.value;
 
-        const info = understandTopic(topic);
+        const info = analyzeTopic(topic);
 
         let paragraphs;
 
 
-        // --------------------------------------
-        // SPECIAL STORY: ROYAL + MARRIAGE
-        // --------------------------------------
-
         if (
+            info.bear
+        ) {
+
+            paragraphs = createBearStory(
+                selectedLevel,
+                length
+            );
+
+        }
+
+        else if (
             info.marriage &&
             info.inheritance &&
             info.kingdom
         ) {
 
-            paragraphs = royalStory(
-                info,
+            paragraphs = createRoyalStory(
                 selectedLevel,
                 length
             );
 
         }
-
-
-        // --------------------------------------
-        // SPECIAL STORY: BEAR
-        // --------------------------------------
-
-        else if (info.type === "bear") {
-
-            paragraphs = bearStory(
-                selectedLevel,
-                length
-            );
-
-        }
-
-
-        // --------------------------------------
-        // GENERAL
-        // --------------------------------------
 
         else {
 
-            paragraphs = generalStory(
-                info,
-                genre,
+            paragraphs = createGeneralStory(
                 selectedLevel,
+                genre,
                 length
             );
 
@@ -791,7 +1000,8 @@
 
                 ${paragraphs
                     .map(
-                        p => `<p>${escapeHTML(p)}</p>`
+                        paragraph =>
+                            `<p>${escapeHTML(paragraph)}</p>`
                     )
                     .join("")}
 
@@ -812,7 +1022,7 @@
 
 
     // ==========================================
-    // LEVEL BUTTONS
+    // LEVEL SELECTION
     // ==========================================
 
     levelButtons.forEach(button => {
@@ -833,7 +1043,7 @@
 
 
     // ==========================================
-    // GENERATE
+    // GENERATE BUTTON
     // ==========================================
 
     generateButton.addEventListener(
@@ -850,7 +1060,7 @@
 
         generate: generateStory,
 
-        version: "4.0.0"
+        version: "5.0.0"
 
     };
 
