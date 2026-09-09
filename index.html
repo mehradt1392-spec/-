@@ -1,10 +1,11 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fa" dir="rtl">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>LevelTale — Learn English Through Stories</title>
+    <title>LevelTale | داستان انگلیسی متناسب با سطح شما</title>
 
     <link rel="stylesheet" href="style.css">
 </head>
@@ -12,13 +13,17 @@
 <body>
 
     <header class="navbar">
-        <div class="logo">LevelTale</div>
+
+        <div class="logo">
+            LevelTale
+        </div>
 
         <nav>
-            <a href="#">Home</a>
-            <a href="#">Stories</a>
-            <a href="#">About</a>
+            <a href="#">خانه</a>
+            <a href="#">داستان‌ها</a>
+            <a href="#">درباره ما</a>
         </nav>
+
     </header>
 
 
@@ -26,16 +31,18 @@
 
         <section class="hero">
 
-            <p class="badge">AI STORIES FOR ENGLISH LEARNERS</p>
+            <p class="badge">
+                داستان‌های انگلیسی با هوش مصنوعی
+            </p>
 
             <h1>
-                Your level.<br>
-                Your story.
+                داستانی برای<br>
+                <span>سطح زبان تو</span>
             </h1>
 
             <p class="subtitle">
-                Create personalized English stories based on your language level,
-                genre and imagination.
+                سطح زبانت را انتخاب کن، موضوع داستانت را بنویس
+                و یک داستان انگلیسی مخصوص خودت بساز.
             </p>
 
         </section>
@@ -43,81 +50,153 @@
 
         <section class="story-box">
 
-            <h2>Create your story</h2>
+            <h2>
+                داستانت را بساز ✨
+            </h2>
 
-            <!-- Language Level -->
 
-            <label>English Level</label>
+            <!-- سطح زبان -->
+
+            <label>
+                سطح زبان انگلیسی
+            </label>
 
             <div class="levels">
 
-                <button class="level" data-level="A1">A1</button>
-                <button class="level" data-level="A2">A2</button>
-                <button class="level" data-level="B1">B1</button>
-                <button class="level" data-level="B2">B2</button>
-                <button class="level" data-level="C1">C1</button>
-                <button class="level" data-level="C2">C2</button>
+                <button class="level" data-level="A1">
+                    A1
+                </button>
+
+                <button class="level" data-level="A2">
+                    A2
+                </button>
+
+                <button class="level" data-level="B1">
+                    B1
+                </button>
+
+                <button class="level" data-level="B2">
+                    B2
+                </button>
+
+                <button class="level" data-level="C1">
+                    C1
+                </button>
+
+                <button class="level" data-level="C2">
+                    C2
+                </button>
 
             </div>
 
 
-            <!-- Genre -->
+            <!-- ژانر -->
 
-            <label>Genre</label>
+            <label for="genre">
+                ژانر داستان
+            </label>
 
             <select id="genre">
 
-                <option value="Fantasy">Fantasy</option>
-                <option value="Mystery">Mystery</option>
-                <option value="Adventure">Adventure</option>
-                <option value="Horror">Horror</option>
-                <option value="Crime">Crime</option>
-                <option value="Drama">Drama</option>
-                <option value="Comedy">Comedy</option>
-                <option value="Romance">Romance</option>
-                <option value="Science Fiction">Science Fiction</option>
-                <option value="Historical">Historical</option>
+                <option value="Fantasy">
+                    فانتزی
+                </option>
+
+                <option value="Mystery">
+                    معمایی
+                </option>
+
+                <option value="Adventure">
+                    ماجراجویی
+                </option>
+
+                <option value="Horror">
+                    ترسناک
+                </option>
+
+                <option value="Crime">
+                    جنایی
+                </option>
+
+                <option value="Drama">
+                    درام
+                </option>
+
+                <option value="Comedy">
+                    کمدی
+                </option>
+
+                <option value="Romance">
+                    عاشقانه
+                </option>
+
+                <option value="Science Fiction">
+                    علمی‌تخیلی
+                </option>
+
+                <option value="Historical">
+                    تاریخی
+                </option>
+
+                <option value="Custom">
+                    بدون ژانر مشخص
+                </option>
 
             </select>
 
 
-            <!-- Custom Topic -->
+            <!-- موضوع -->
 
-            <label>Your idea</label>
+            <label for="topic">
+                موضوع داستان
+            </label>
 
             <textarea
                 id="topic"
-                placeholder="Example: A boy who suddenly became a bear..."
+                placeholder="مثلاً: پسری که یک روز صبح تبدیل به خرس شد..."
             ></textarea>
 
 
-            <!-- Length -->
+            <!-- طول داستان -->
 
-            <label>Story Length</label>
+            <label for="length">
+                طول داستان
+            </label>
 
             <select id="length">
 
-                <option value="short">Short</option>
-                <option value="medium">Medium</option>
-                <option value="long">Long</option>
+                <option value="short">
+                    کوتاه
+                </option>
+
+                <option value="medium">
+                    متوسط
+                </option>
+
+                <option value="long">
+                    طولانی
+                </option>
 
             </select>
 
 
             <button id="generateButton" class="generate">
-
-                ✨ Create My Story
-
+                ✨ ساخت داستان
             </button>
 
         </section>
 
 
-        <!-- Story Result -->
+        <!-- نتیجه -->
 
-        <section id="storyResult" class="story-result hidden">
+        <section
+            id="storyResult"
+            class="story-result hidden"
+        >
 
-            <h2>Your Story</h2>
+            <h2>
+                📖 داستان شما
+            </h2>
 
             <div id="storyText"></div>
 
@@ -128,7 +207,9 @@
 
     <footer>
 
-        <p>© 2026 LevelTale</p>
+        <p>
+            © 2026 LevelTale
+        </p>
 
     </footer>
 
@@ -136,4 +217,5 @@
     <script src="script.js"></script>
 
 </body>
+
 </html>
